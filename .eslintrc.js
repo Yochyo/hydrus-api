@@ -11,6 +11,7 @@ module.exports = {
     project: 'tsconfig.json',
   },
   rules: {
-    "eqeqeq": 'off'
+    eqeqeq: 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
 };
