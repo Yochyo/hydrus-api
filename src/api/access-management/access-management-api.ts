@@ -1,46 +1,37 @@
 import { BaseApi } from '../base-api';
-import { type AccessPermission } from './types';
+import {
+  type ApiVersionResponse,
+  type GetServiceRequest,
+  type GetServiceResponse,
+  type GetServicesResponse,
+  type RequestNewPermissionRequest,
+  type RequestNewPermissionResponse,
+  type SessionKeyResponse,
+  type VerifyAccessKeyResponse,
+} from './types';
 
 export class AccessManagementApi extends BaseApi {
-  async getApiVersion(): Promise<{ version: number; hydrusVersion: number }> {
+  async getApiVersion(): Promise<ApiVersionResponse> {
     return await this.request({ method: 'GET', endpoint: 'api_version' });
   }
 
-  async requestNewPermissions(args: { name: string; basicPermissions: AccessPermission[] }): Promise<{
-    accessKey: string;
-  }> {
-    return await this.request({
-      method: 'GET',
-      endpoint: 'request_new_permissions',
-      args: { ...args, basicPermissions: args.basicPermissions },
-    });
+  async requestNewPermissions(args: RequestNewPermissionRequest): Promise<RequestNewPermissionResponse> {
+    return await this.request({ method: 'GET', endpoint: 'request_new_permissions', args });
   }
 
-  async getSessionKey(): Promise<{
-    sessionKey: string;
-  }> {
+  async getSessionKey(): Promise<SessionKeyResponse> {
     return await this.request({ method: 'GET', endpoint: 'session_key' });
   }
 
-  async verifyAccessKey(): Promise<{
-    basicPermissions: number[];
-    humanDescription: string;
-  }> {
+  async verifyAccessKey(): Promise<VerifyAccessKeyResponse> {
     return await this.request({ method: 'GET', endpoint: 'verify_access_key' });
   }
 
-  async getService(args: { serviceName: string } | { serviceKey: string }): Promise<{
-    service: {
-      name: string;
-      serviceKey: string;
-      type: number;
-      typePretty: string;
-    };
-  }> {
-    return await this.request({ method: 'GET', endpoint: 'get_service' });
+  async getService(args: GetServiceRequest): Promise<GetServiceResponse> {
+    return await this.request({ method: 'GET', endpoint: 'get_service', args });
   }
 
-  async getServices(): Promise<{ services: Record<string, { name: string; type: number; typePretty: string }> }> {
+  async getServices(): Promise<GetServicesResponse> {
     return await this.request({ method: 'GET', endpoint: 'get_services' });
   }
 }

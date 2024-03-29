@@ -3,11 +3,8 @@ import { AddFileStatus } from '../add-files/types';
 import { UrlType } from './types';
 import { fileSchema } from '../../common/schemas';
 
-// region common
 export const urlType = z.nativeEnum(UrlType);
-// endregion
 
-// region getUrlFiles
 export const getUrlFiles = z.object({
   url: z.string(),
   doublecheck_file_system: z.boolean().optional(),
@@ -23,9 +20,7 @@ export const getUrlFilesResponse = z.object({
     })
   ),
 });
-// endregion
 
-// region getUrlInfo
 export const getUrlInfoRequest = z.object({
   url: z.string(),
 });
@@ -37,9 +32,7 @@ export const getUrlInfoResponse = z.object({
   match_name: z.string(),
   can_parse: z.boolean(),
 });
-// endregion
 
-// region addUrl
 export const addUrlRequest = z.object({
   url: z.string(),
   destination_page_key: z.string().optional(),
@@ -53,9 +46,7 @@ export const addUrlInfoResponse = z.object({
   human_result_text: z.string(),
   normalised_url: urlType,
 });
-// endregion
 
-// region associateUrl
 export const associateUrl = z.intersection(
   z.object({
     url_to_add: z.string().optional(),
@@ -65,4 +56,3 @@ export const associateUrl = z.intersection(
   }),
   fileSchema
 );
-// endregion

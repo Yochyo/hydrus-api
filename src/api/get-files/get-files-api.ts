@@ -1,51 +1,51 @@
-import { BaseApi } from './base-api';
-import { type File, type FileDomain } from '../common/common-hydrus-types';
+import { BaseApi } from '../base-api';
+// import { type File, type FileDomain } from '../common/common-hydrus-types';
 
 export class GetFilesApi extends BaseApi {
   // todo File searches occur in the display tag_display_type. If you want to pair autocomplete tag lookup from /search_tags to this file search (e.g. for making a standard booru search interface), then make sure you are searching display tags there.
-  async searchFiles(
-    args: {
-      tags: Array<string | string[]>;
-      tagServiceKey?: string;
-      fileSortType?: FileSortType;
-      fileSortAsc?: boolean;
-      returnFileIds?: boolean;
-      returnHashes?: boolean;
-    } & Partial<FileDomain>
-  ): Promise<{
-    fileIds: number[];
-    hashes: string[];
-  }> {
-    return await this.request({ method: 'GET', endpoint: 'get_files/search_files', args: { ...args, tags: args.tags } });
-  }
-
-  async getFileHashes(args: { hash: string; hashes: string[]; sourceHashType: HashType; desiredHashType: HashType }): Promise<{
-    hashes: Record<string, string>;
-  }> {
-    return await this.request({ method: 'GET', endpoint: 'get_files/file_hashes', args });
-  }
-
-  async getFileMetadata<DETAILED extends boolean>(
-    args: {
-      createNewFileIds?: boolean;
-      onlyReturnIdentifiers?: boolean;
-      onlyReturnBasicInformation?: boolean;
-      detailedUrlInformation?: DETAILED;
-      includeNotes?: boolean;
-      includeServiceObject?: boolean;
-      hideServiceKeysTags?: boolean;
-    } & File
-  ): Promise<DETAILED extends false ? MetaDataResult : MetaDataResult & { metadata: DetailedKnownUrls[] }> {
-    return await this.request({ method: 'GET', endpoint: 'get_files/file_metadata', args });
-  }
-
-  async getFile(args: { fileId?: number; hash?: string; download?: boolean }): Promise<any> {
-    return await this.request({ method: 'GET', endpoint: 'get_files/file', args, axiosArgs: { responseType: 'arraybuffer' } });
-  }
-
-  async getThumbnail(args: { fileId?: number; hash?: string }): Promise<any> {
-    return await this.request({ method: 'GET', endpoint: 'get_files/file', args, axiosArgs: { responseType: 'arraybuffer' } });
-  }
+  // async searchFiles(
+  //   args: {
+  //     tags: Array<string | string[]>;
+  //     tagServiceKey?: string;
+  //     fileSortType?: FileSortType;
+  //     fileSortAsc?: boolean;
+  //     returnFileIds?: boolean;
+  //     returnHashes?: boolean;
+  //   } & Partial<FileDomain>
+  // ): Promise<{
+  //   fileIds: number[];
+  //   hashes: string[];
+  // }> {
+  //   return await this.request({ method: 'GET', endpoint: 'get_files/search_files', args: { ...args, tags: args.tags } });
+  // }
+  //
+  // async getFileHashes(args: { hash: string; hashes: string[]; sourceHashType: HashType; desiredHashType: HashType }): Promise<{
+  //   hashes: Record<string, string>;
+  // }> {
+  //   return await this.request({ method: 'GET', endpoint: 'get_files/file_hashes', args });
+  // }
+  //
+  // async getFileMetadata<DETAILED extends boolean>(
+  //   args: {
+  //     createNewFileIds?: boolean;
+  //     onlyReturnIdentifiers?: boolean;
+  //     onlyReturnBasicInformation?: boolean;
+  //     detailedUrlInformation?: DETAILED;
+  //     includeNotes?: boolean;
+  //     includeServiceObject?: boolean;
+  //     hideServiceKeysTags?: boolean;
+  //   } & File
+  // ): Promise<DETAILED extends false ? MetaDataResult : MetaDataResult & { metadata: DetailedKnownUrls[] }> {
+  //   return await this.request({ method: 'GET', endpoint: 'get_files/file_metadata', args });
+  // }
+  //
+  // async getFile(args: { fileId?: number; hash?: string; download?: boolean }): Promise<any> {
+  //   return await this.request({ method: 'GET', endpoint: 'get_files/file', args, axiosArgs: { responseType: 'arraybuffer' } });
+  // }
+  //
+  // async getThumbnail(args: { fileId?: number; hash?: string }): Promise<any> {
+  //   return await this.request({ method: 'GET', endpoint: 'get_files/file', args, axiosArgs: { responseType: 'arraybuffer' } });
+  // }
 }
 
 export enum FileSortType {

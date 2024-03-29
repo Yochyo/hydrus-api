@@ -1,22 +1,16 @@
 import { z } from 'zod';
 import { fileDomainSchema, fileSchema, serviceObjectSchema } from '../../common/schemas';
-
-// region common
 import { AddTagAction } from './types';
 
 export const addTagAction = z.nativeEnum(AddTagAction);
-// endregion
 
-// region cleanTags
 export const cleanTagsRequest = z.object({
   tags: z.array(z.string()),
 });
 export const cleanTagsResponse = z.object({
   tags: z.array(z.string()),
 });
-// endregion
 
-// region getSiblingsAndParentsRequest
 export const getSiblingsAndParentsRequest = z.object({
   tags: z.array(z.string()),
 });
@@ -36,9 +30,7 @@ export const getSiblingsAndParentsResponse = z.object({
     )
   ),
 });
-// endregion
 
-// region searchTags
 export const searchTagsRequest = z.intersection(
   fileDomainSchema,
   z.object({
@@ -56,23 +48,18 @@ export const searchTagsResponse = z.object({
     })
   ),
 });
-// endregion
 
-// region addTags
-export const addTagsRequest = z.intersection(
-  fileSchema,
+export const addTagsRequest = fileSchema.and(
   z.object({
     service_keys_to_tags: z.array(z.string()).optional(),
     service_keys_to_actions_to_tags: z.record(
       z.string(),
       z.union([
         z.object({
-          [AddTagAction.PetitionFromTagRepo]: z.array(z.array(z.string()).length(2)),
+          [AddTagAction.PetitionFromTagRepo]: z.array(z.array(z.string()).max(2)),
         }),
         z.record(addTagAction, z.array(z.string())),
       ])
     ),
   })
 );
-
-// endregion

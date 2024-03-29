@@ -1,9 +1,9 @@
 import { BaseApi } from './api/base-api';
-import { AddFileApi } from './api/add-file-api';
-import { AddUrlApi } from './api/add-url-api';
 import { type AxiosRequestConfig } from 'axios';
-import { GetFilesApi } from './api/get-files-api';
 import { AccessManagementApi } from './api/access-management/access-management-api';
+import { AddUrlApi } from './api/add-tags/add-tag-api';
+import { GetFilesApi } from './api/get-files/get-files-api';
+import { AddFileApi } from './api/add-files/add-file-api';
 
 /**
  * https://github.com/ilyamkin/dev-to-js

@@ -57,13 +57,13 @@ services:
 #    ports:
 #      - 8080:80 # READ
 
-  hybooru-pg:
-    image: healthcheck/postgres
-    container_name: hybooru-pg
-    environment:
-      - POSTGRES_USER=hybooru
-      - POSTGRES_PASSWORD=hybooru
-      - POSTGRES_DB=hybooru
-    volumes:
-      - hybooru-pg-data:/var/lib/postgresql/data
-    restart: unless-stopped
+#  hybooru-pg:
+#    image: healthcheck/postgres
+#    container_name: hybooru-pg
+#    environment:
+#      - POSTGRES_USER=hybooru
+#      - POSTGRES_PASSWORD=hybooru
+#      - POSTGRES_DB=hybooru
+#    volumes:
+#      - hybooru-pg-data:/var/lib/postgresql/data
+#    restart: unless-stopped

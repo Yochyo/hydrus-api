@@ -28,19 +28,18 @@ export abstract class BaseApi {
       ...axiosArgs,
     };
 
-    const snakeCaseArgs = objectKeysToSnakeCaseV2(args);
     if (method == 'GET') {
       const argsWithStringifiedLists = Object.fromEntries(
-        Object.entries(snakeCaseArgs).map(([key, value]) => [key, Array.isArray(value) ? JSON.stringify(value) : value])
+        Object.entries(args).map(([key, value]) => [key, Array.isArray(value) ? JSON.stringify(value) : value])
       );
       console.log(argsWithStringifiedLists);
       request = { ...request, params: argsWithStringifiedLists };
     }
     if (method == 'POST') {
-      request = { ...request, data: snakeCaseArgs, headers: { ...request.headers, ...HydrusApi.CONTENT_TYPE_JSON, ...headers } };
+      request = { ...request, data: args, headers: { ...request.headers, ...HydrusApi.CONTENT_TYPE_JSON, ...headers } };
     }
 
     const res = await axios.request(request);
-    return request.responseType == 'arraybuffer' ? res.data : await objectKeysToCamelCaseV2(res.data);
+    return res.data;
   }
 }
