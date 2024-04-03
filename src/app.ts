@@ -6,7 +6,7 @@ void (async () => {
   // await api.searchFiles({
   //   tags: ['comm:completed', 'character:sherry'],
   // })
-  const a = await api.getApiVersion();
+  const a = await api.getFileMetadata({});
   console.log(JSON.stringify(a));
   // console.log(
   //   await api.requestNewPermissions({

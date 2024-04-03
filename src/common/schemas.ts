@@ -6,6 +6,7 @@ export const fileSchema = z.object({
   hash: z.string().optional(),
   hashes: z.array(z.string()).optional(),
 });
+
 export const fileDomainSchema = z.object({
   file_service_key: z.string().optional(),
   file_service_keys: z.array(z.string()).optional(),

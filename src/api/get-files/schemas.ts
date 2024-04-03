@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { fileDomainSchema, serviceSchema } from '../../common/schemas';
+import { fileDomainSchema, fileSchema, serviceSchema } from '../../common/schemas';
 
 export const hashTypeSchema = z.union([z.literal('sha256'), z.literal('md5'), z.literal('sha1'), z.literal('sha512')]);
 
@@ -32,8 +32,21 @@ export const fileHashesResponse = z.object({
   hashes: z.record(z.string(), z.string()),
 });
 
+export const fileMetadataRequest = z.object({
+  create_new_file_ids: z.boolean().optional(), // todo true or false (optional if asking with hash(es), defaulting to false)
+  only_return_identifiers: z.boolean().optional(),
+  only_return_basic_information: z.boolean().optional(),
+  detailed_url_information: z.boolean().optional(),
+  include_blurhash: z.boolean().optional(),
+  include_milliseconds: z.boolean().optional(),
+  include_notes: z.boolean().optional(),
+  include_services_object: z.boolean().optional(),
+  hide_service_keys_tags: z.boolean().optional(),
+
+}).and(fileSchema)
+
 // todo
-export const fileMetadata = z.object({
+export const fileMetadataResponse = z.object({
   services: serviceSchema,
   metadata: z.array(
     z.object({

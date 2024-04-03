@@ -32,7 +32,6 @@ export abstract class BaseApi {
       const argsWithStringifiedLists = Object.fromEntries(
         Object.entries(args).map(([key, value]) => [key, Array.isArray(value) ? JSON.stringify(value) : value])
       );
-      console.log(argsWithStringifiedLists);
       request = { ...request, params: argsWithStringifiedLists };
     }
     if (method == 'POST') {

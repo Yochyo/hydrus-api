@@ -1,11 +1,10 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert/strict';
-import { api } from '../../__test__/global.test';
+import { api } from '../../__test__/global';
 import { apiVersionResponse } from '../../access-management/schemas';
 
 describe('get-files', () => {
-  it('api-version', async () => {
-    const res = await api.getApiVersion();
-    assert.ok(apiVersionResponse.parse(res));
+  it('get-metadata', async () => {
+    const res = await api.getFileMetadata({ hash: '37bc0d62ee746ce5342b9083a0515b961881a2fdaa7ab390b3598151f58ab16a' });
+    console.log(res);
+    expect(apiVersionResponse.parse(res)).toBeTruthy();
   });
 });
