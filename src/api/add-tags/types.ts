@@ -1,27 +1,64 @@
-import { type z } from 'zod';
-import {
-  type addTagsRequest,
-  type cleanTagsRequest,
-  type cleanTagsResponse,
-  type getSiblingsAndParentsRequest,
-  type getSiblingsAndParentsResponse,
-  type searchTagsRequest,
-  type searchTagsResponse,
-} from './schemas';
+import { HydrusFileDomain, HydrusFiles, HydrusServiceObject } from '../../common/types';
+import { RequireAtLeastOne, ValueOf } from 'type-fest';
 
-export const AddTagAction = {
-  AddTag: 0,
-  DeleteFromService: 1,
-  PendToTagRepo: 2,
-  RescindPendFromTagRepo: 3,
-  PetitionFromTagRepo: 4,
-  RescindPetitionFromTagRepo: 5,
-} as const;
+export enum AddTagAction {
+  AddTag = 0,
+  DeleteFromService = 1,
+  PendToTagRepo = 2,
+  RescindPendFromTagRepo = 3,
+  PetitionFromTagRepo = 4,
+  RescindPetitionFromTagRepo = 5,
+}
+export type CleanTagsRequest = {
+  tags: string[];
+};
+export type CleanTagsResponse = {
+  tags: string[];
+};
+export type GetSiblingsAndParentsRequest = {
+  tags: string[];
+};
+export type GetSiblingsAndParentsResponse = {
+  services: HydrusServiceObject;
+  tags: Record<
+    string,
+    Record<
+      string,
+      {
+        ideal_tag: string;
+        siblings: string[];
+        descendants: string[];
+        ancestors: string[];
+      }
+    >
+  >;
+};
 
-export type CleanTagsRequest = z.infer<typeof cleanTagsRequest>;
-export type CleanTagsResponse = z.infer<typeof cleanTagsResponse>;
-export type GetSiblingsAndParentsRequest = z.infer<typeof getSiblingsAndParentsRequest>;
-export type GetSiblingsAndParentsResponse = z.infer<typeof getSiblingsAndParentsResponse>;
-export type SearchTagsRequest = z.infer<typeof searchTagsRequest>;
-export type SearchTagsResponse = z.infer<typeof searchTagsResponse>;
-export type AddTagsRequest = z.infer<typeof addTagsRequest>;
+export type SearchTagsRequest = Partial<HydrusFileDomain> & {
+  search: string;
+  tag_service_key?: string;
+  tag_display_type?: 'storage' | 'display';
+};
+export type SearchTagsResponse = {
+  tags: { value: string; count: number }[];
+};
+
+export type AddTagsRequest = HydrusFiles &
+  RequireAtLeastOne<{
+    service_keys_to_tags: {
+      [serviceKey: string]: string[];
+    };
+    service_keys_to_actions_to_tags: {
+      [serviceKey: string]: Partial<
+        | {
+            [action in AddTagAction]: string[];
+          }
+        | {
+            [AddTagAction.PetitionFromTagRepo]: (string | [string, string])[];
+          }
+      >;
+    };
+  }> & {
+    override_previously_deleted_mappings?: boolean;
+    create_new_deleted_mappings?: boolean;
+  };
