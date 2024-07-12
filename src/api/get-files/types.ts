@@ -1,4 +1,4 @@
-export enum a {
+export enum FileSortType {
   FileSize = 0,
   Duration = 1,
   ImportTime = 2,
@@ -20,3 +20,16 @@ export enum a {
   ArchiveTimestamp = 19,
   HashHex = 20,
 }
+
+export type SearchFileRequest = z.infer<typeof searchFilesRequest>
+export type SearchFilesResponse = z.infer<typeof searchFilesResponse>
+export type FileHashesRequest = z.infer<typeof fileHashesRequest>
+export type FileHashesResponse = z.infer<typeof fileHashesResponse>
+export type FileMetadataRequest = z.infer<typeof fileMetadataRequest>
+export type FileMetadataResponse = z.infer<typeof fileMetadataResponse>
+export type GetFileRequest = z.infer<typeof getFileRequest>
+export type GetFileResponse = z.infer<typeof getFileResponse>
+export type GetThumbnailRequest = z.infer<typeof getThumbnailRequest>
+export type GetThumbnailResponse = z.infer<typeof getThumbnailResponse>
+export type RenderRequest = z.infer<typeof renderRequest>
+export type RenderResponse = z.infer<typeof renderResponse>
